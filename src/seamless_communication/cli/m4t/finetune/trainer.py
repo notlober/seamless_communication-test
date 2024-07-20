@@ -397,10 +397,7 @@ class UnitYFinetune:
         if dist_utils.is_main_process():
             torch.save({
                 "model_name": self.params.model_name,
-                "model": {
-                    key.replace("module.model.model.", ""): value
-                    for key, value in self.model.state_dict().items()
-                }
+                "model": self.model.state_dict()
             }, self.params.save_model_path)
         if dist_utils.is_dist_initialized():
             dist.barrier()
